@@ -6,3 +6,8 @@ prefix: AlcoegT-ItemSystem
 authors: [ 爱开发的雾都 ]
 description: 神奇的物品系统
 website: https:\\localhost:8080
+
+commands:
+  openCookingPotMenu:
+    description: 打开会员制餐厅菜单
+    usage: /<command>
