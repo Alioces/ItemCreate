@@ -7,7 +7,7 @@ public final class ItemCreate extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-
+        this.getLogger().info("hello-world");
     }
 
     @Override
