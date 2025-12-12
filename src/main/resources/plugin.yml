@@ -1,0 +1,8 @@
+name: ItemCreate
+version: '1.0-SNAPSHOT'
+main: org.example.wudu.itemCreate.ItemCreate
+api-version: '1.21'
+prefix: AlcoegT-ItemSystem
+authors: [ 爱开发的雾都 ]
+description: 神奇的物品系统
+website: https:\\localhost:8080
