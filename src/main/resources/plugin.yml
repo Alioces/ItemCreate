@@ -8,6 +8,6 @@ description: 神奇的物品系统
 website: https:\\localhost:8080
 
 commands:
-  openAllItemMenu:
-    description: 打开物品库
+  openCookingPotMenu:
+    description: 打开会员制餐厅菜单
     usage: /<command>
