@@ -1,0 +1,36 @@
+sword:
+  item:
+    type: "SWORD"
+    name: "Excalibur"
+    id: 1001
+    itemRarity: "LEGENDARY"
+    itemStack:
+      type: "DIAMOND_SWORD"
+      amount: 1
+      lore:
+        - "传说中的圣剑"
+
+armor:
+  item:
+    type: "ARMOR"
+    name: "Dragon Armor"
+    id: 1002
+    itemRarity: "EPIC"
+    itemStack:
+      type: "DIAMOND_CHESTPLATE"
+      amount: 1
+      enchantments:
+        - "PROTECTION:4"
+        - "DURABILITY:3"
+
+potion:
+  item:
+    type: "POTION"
+    name: "Health Potion"
+    id: 1003
+    itemRarity: "COMMON"
+    itemStack:
+      type: "POTION"
+      amount: 3
+      effects:
+        - "HEAL:2:30"
