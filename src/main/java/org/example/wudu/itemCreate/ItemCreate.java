@@ -8,6 +8,7 @@ public final class ItemCreate extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         this.getLogger().info("hello-world");
+        this.getLogger().info("hello-world");
     }
 
     @Override
