@@ -10,7 +10,7 @@ public class YmlLoadFileConfig implements LoadFileConfig {
 
     private final YamlConfiguration yamlConfiguration;
 
-    YmlLoadFileConfig(YamlConfiguration yamlConfiguration){
+    public YmlLoadFileConfig(YamlConfiguration yamlConfiguration){
         this.yamlConfiguration = yamlConfiguration;
     }
     @Override

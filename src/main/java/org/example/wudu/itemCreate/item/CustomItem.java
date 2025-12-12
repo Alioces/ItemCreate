@@ -1,28 +1,26 @@
 package org.example.wudu.itemCreate.item;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
-
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class CustomItem implements ConfigurationSerializable {
-
+@AllArgsConstructor
+public class CustomItem implements ConfigurationSerializable,Cloneable {
     private String type;
     private String name;
-    private int id;
-
+    private int id = 0;
     private ItemRarity itemRarity;
 
     private ItemStack itemStack;
+
 
     /**
      * Creates a Map representation of this class.
@@ -48,5 +46,19 @@ public class CustomItem implements ConfigurationSerializable {
 
     public static Object deserialize(@NotNull Map<String, Object> args) {
         return null;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Object clone = super.clone();
+        CustomItem customItem = (CustomItem) clone;
+
+        customItem.setItemStack(this.getItemStack());
+        customItem.setId(this.getId());
+        customItem.setItemRarity(this.getItemRarity());
+        customItem.setType(getType());
+        customItem.setName(this.getName());
+
+        return customItem;
     }
 }
