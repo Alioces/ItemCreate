@@ -2,6 +2,7 @@ package org.example.wudu.itemCreate.config;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.example.wudu.itemCreate.item.CustomItem;
 
 import java.io.File;
@@ -31,13 +32,13 @@ public class YmlLoadFileConfig implements LoadFileConfig {
         }
 
         // 处理单个文件
-        /*if (folder.isFile()) {
+        if (folder.isFile()) {
             if (folder.getName().toLowerCase().endsWith(".yml")) {
                 processFile(folder, items);
             }
             System.out.println("测试成功1");
             return items;
-        }*/
+        }
 
         // 处理文件夹
         if (folder.isDirectory()) {
@@ -48,7 +49,6 @@ public class YmlLoadFileConfig implements LoadFileConfig {
                 }
             }
         }
-        System.out.println("files反序列化成功");
         return items;
     }
     @Override
@@ -70,7 +70,7 @@ public class YmlLoadFileConfig implements LoadFileConfig {
                     // 将Map反序列化为CustomItem对象
                     CustomItem customItem = CustomItem.deserialize(itemValues);
                     // 将反序列化成功CustomItem对象返回
-                    System.out.println("file反序列化成功");
+                    System.out.println("反序列化成功");
                     System.out.println(customItem);
                     return customItem;
                 }
@@ -84,8 +84,10 @@ public class YmlLoadFileConfig implements LoadFileConfig {
             YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
             // 遍历所有section
             for (String key : config.getKeys(false)) {
+                System.out.println("开始反序列化");
                 // 检查当前键(key)是否对应一个配置节(section)
                 if (config.isConfigurationSection(key)) {
+                    System.out.println("go");
                     // 获取这个配置节
                     // 例如，如果YAML中有：
                     // sword:
@@ -99,7 +101,7 @@ public class YmlLoadFileConfig implements LoadFileConfig {
                     //     type: ...
                     //     name: ...
                     ConfigurationSection itemSection = section.getConfigurationSection("item");
-                    // 确保"item"节确实存在 !!!!!!!!
+                    // 确保"item"节确实存在
                     if (itemSection != null) {
                         // 获取item节中的所有键值对,false参数表示不递归获取深层嵌套的值
                         Map<String, Object> itemValues = itemSection.getValues(false);
@@ -124,7 +126,10 @@ public class YmlLoadFileConfig implements LoadFileConfig {
 
     //将CustomItem对象保存到YAML文件中
     @Override
-    public void saveFile(CustomItem customItem,File targetFile) {
+    public void saveFile(CustomItem customItem) {
+        // 确保数据文件夹存在
+        // 创建文件对象，使用物品的ID作为文件名
+        File file = new File("F/items/" + customItem.getId() + ".yml");
         try {
             // 创建YAML配置
             YamlConfiguration config = new YamlConfiguration();
@@ -134,13 +139,15 @@ public class YmlLoadFileConfig implements LoadFileConfig {
             itemSection.set("name", customItem.getName());
             itemSection.set("id", customItem.getId());
             itemSection.set("itemRarity", customItem.getItemRarity().name());
+
             // 保存ItemStack
             if (customItem.getItemStack() != null) {
                 itemSection.set("itemStack", customItem.getItemStack().serialize());
             }
+
             // 保存文件
-            config.save(targetFile);
-            getLogger().info("成功保存物品: " + customItem.getName() + " 到文件: " + targetFile.getName());
+            config.save(file);
+            getLogger().info("成功保存物品: " + customItem.getName() + " 到文件: " + file.getName());
 
         } catch (IOException e) {
             getLogger().info("保存物品文件失败: " + e.getMessage());
