@@ -29,5 +29,5 @@ public interface LoadFileConfig {
      * 保存CustomItem对象到文件
      * @param customItem 要保存的CustomItem对象
      */
-    void saveFile(CustomItem customItem);
+    void saveFile(CustomItem customItem,File file);
 }

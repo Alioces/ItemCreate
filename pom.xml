@@ -33,7 +33,7 @@
                             <target>
                                 <!-- 复制操作：从target目录复制到自定义目录 -->
                                 <copy file="${project.build.directory}/${project.build.finalName}.jar"
-                                      tofile="E:\服务器\Test_plugins_server\plugins\${project.build.finalName}.jar"/>
+                                      tofile="F:\server\plugins\${project.build.finalName}.jar"/>
                             </target>
                         </configuration>
                     </execution>
