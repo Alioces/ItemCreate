@@ -8,11 +8,16 @@ import org.jetbrains.annotations.NotNull;
 import org.bukkit.Material;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * CustomItem 类实现了 ConfigurationSerializable 和 Cloneable 接口
+ * 用于表示自定义物品，包含类型、名称、ID、稀有度以及物品堆栈等属性
+ * 提供序列化和克隆功能
+ */
 @Data
 @AllArgsConstructor
 public class CustomItem implements ConfigurationSerializable {
     private String type;
+    // 物品名称
     private String name;
     private int id;
     private ItemRarity itemRarity;
