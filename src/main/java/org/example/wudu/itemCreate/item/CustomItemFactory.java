@@ -6,7 +6,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 /**
- * 自定义物品工厂类，用于创建和管理自定义物品
+ * 自定义物品工厂类，用于创建和管理自定义物品，对应游戏内物品与插件物品的处理
  */
 public class CustomItemFactory {
 

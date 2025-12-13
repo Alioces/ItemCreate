@@ -7,7 +7,7 @@ import java.util.List;
 
 
 /**
- * 物品库类，用于管理和展示自定义物品
+ * 物品库类，用于管理和展示自定义物品，添加物品
  */
 public class ItemLibrary {
 

@@ -12,6 +12,7 @@ import org.example.wudu.itemCreate.item.ItemLibrary;
 import org.example.wudu.itemCreate.itemEvent.ItemEventListener;
 /**
  * 这是一个自定义物品创建的插件主类
+ * 使用物品库委托存储
  * 使用了Lombok的@Getter注解自动生成getter方法
  * 继承自JavaPlugin，表示这是一个Bukkit/Spigot插件
  */

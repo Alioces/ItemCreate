@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 物品稀有度枚举类，定义了不同等级的物品稀有度
  * ● 纸质级：
  * ● 木质级：
  * ● 石质级：
@@ -19,13 +20,18 @@ import java.util.Map;
  * ● 下界合金级：
  * ● 世界基岩级：
  * */
-@Getter
-public enum ItemRarity implements ConfigurationSerializable {
-    Paper(Material.PAPER,"Paper");
+@Getter  // 使用Lombok的@Getter注解，自动为所有字段生成getter方法
+public enum ItemRarity implements ConfigurationSerializable {  // 实现ConfigurationSerializable接口，使对象可被序列化为配置文件格式
+    Paper(Material.PAPER,"Paper");  // 定义一个名为Paper的稀有度，使用纸张材质和名称
 
-    private Material rarityMaterial;
-    private String name;
+    private Material rarityMaterial;  // 稀有度对应的材质
+    private String name;  // 稀有度的名称
 
+    /**
+     * 构造函数，用于创建新的稀有度实例
+     * @param rarityMaterial 用于表示稀有度的材质
+     * @param name 稀有度的名称
+     */
     ItemRarity(Material rarityMaterial, String name) {
         this.rarityMaterial = rarityMaterial;
         this.name = name;

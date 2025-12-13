@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * CustomItemManager类，用于管理自定义物品
+ * CustomItemManager类，用于管理自定义物品，提供对应的查找功能
  * 包含自定义物品的加载、存储和访问功能
  */
 @Getter
