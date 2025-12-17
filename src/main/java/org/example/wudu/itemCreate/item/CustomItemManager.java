@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * CustomItemManager类，用于管理自定义物品，提供对应的查找功能
@@ -49,7 +50,7 @@ public class CustomItemManager {
      * 自定义物品配置文件的存储目录
      * 用于存放所有自定义物品的配置文件
      */
-    private final File itemConfigDir;
+    private final File itemConfigDir; // plugins/ItemCreate/CustomItem
 
     /**
      * CustomItemManager的构造函数
@@ -62,13 +63,13 @@ public class CustomItemManager {
         // 获取插件配置
         FileConfiguration config = plugin.getConfig();
         // 记录物品配置目录信息
-        plugin.getLogger().info("物品配置目录"+ config.getString("configureFolders"));
+        plugin.getLogger().info("物品配置目录"+ config.getString("configureFolders"));  //config.getString("configureFolders") 获取resource文件下config.yml配置文件中configureFolders的值 : CustomItem
         // 初始化物品配置目录
-        this.itemConfigDir = new File(plugin.getDataFolder()+"/"+config.getString("configureFolders"));
+        this.itemConfigDir = new File(plugin.getDataFolder()+"/"+config.getString("configureFolders")); //plugin.getDataFolder() 获取plugins下的数据文件夹（数据文件夹:使用plugin.yml中定义的name字段作为文件夹名），这里为plugins/ItemCreate + /CustomItem
         // 假设用户第一次使用创建一个模板配置文件
-        if (!itemConfigDir.isDirectory() || !itemConfigDir.exists()){
-            itemConfigDir.mkdirs();
-            initItemDir(itemConfigDir);
+        if (!itemConfigDir.isDirectory() || !itemConfigDir.exists()){    // 如果物品配置目录不存在
+            itemConfigDir.mkdirs();      //创建plugins/ItemCreate/CustomItem文件夹
+            initItemDir(itemConfigDir);  //  传入plugins/ItemCreate/CustomItem url
         }
     }
 
@@ -78,9 +79,10 @@ public class CustomItemManager {
  */
     public void readerCustomItemConfig(){
         // 创建YAML配置文件加载器实例
-        YmlLoadFileConfig configuration = new YmlLoadFileConfig(new YamlConfiguration());
+        YmlLoadFileConfig configuration = new YmlLoadFileConfig(new YamlConfiguration());  //传入yamlConfiguration实例，直接在YmlLoadFileConfig类中封装yamlConfiguration，方便使用相关功能
         // 读取指定目录下的配置文件，并对每个自定义物品进行处理
         configuration.readFileFolder(itemConfigDir).forEach(customItem ->{
+
             // 获取物品堆栈对象
             ItemStack itemStack = customItem.getItemStack();
             // 获取物品的元数据
@@ -101,6 +103,7 @@ public class CustomItemManager {
             // 将自定义物品添加到名称到ID的映射表中
             itemNameToId.put(customItem.getName(), customItem.getId());
         });
+        plugin.getLogger().info("映射情况" + customItemMap + '\n'+ itemNameToId);
     }
 
 /**
@@ -108,21 +111,21 @@ public class CustomItemManager {
  * @param itemConfigDir 物品配置目录的File对象
  */
     private void initItemDir(File itemConfigDir) {
-    // 创建模板配置文件
+        //创建一个 File 对象，表示位于 itemConfigDir 目录下的 "模板.yml" 文件
         File itemFile = new File(itemConfigDir, "模板.yml");
     // 加载YAML配置文件
         YamlConfiguration loaded = YamlConfiguration.loadConfiguration(itemFile);
     // 创建一个自定义物品实例
         CustomItem customItem = new CustomItem(
-                "CustomItem",    // 物品名称
-                "testItem",      // 物品标识符
+                "CustomItem",    // 物品标识符
+                "testItem",      // 物品名称
                 0,               // 物品数量
                 ItemRarity.Paper, // 物品稀有度
                 new ItemStack(Material.APPLE) // 物品材质
         );
-    // 将自定义物品的序列化数据添加为默认值
+    // 将自定义物品的序列化数据添加为默认值 在模板.yml配置文件中
         loaded.addDefaults(customItem.serialize());
-    // 设置配置文件选项，自动复制默认值
+    // 设置配置文件选项自动复制默认值
         loaded.options().copyDefaults(true);
     // 尝试保存配置文件
         try {

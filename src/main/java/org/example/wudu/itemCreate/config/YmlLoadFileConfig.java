@@ -16,11 +16,12 @@ public class YmlLoadFileConfig implements LoadFileConfig {
 
     private final YamlConfiguration yamlConfiguration;
 
+
     public YmlLoadFileConfig(YamlConfiguration yamlConfiguration){
         this.yamlConfiguration = yamlConfiguration;
     }
 
-    //可以传入单个文件，也可以传文件夹
+    //检查ItemCreate下config.yml中configureFolders对应的文件夹是否存在，如果存在读取对应文件夹下所有yml文件到
     @Override
     public List<CustomItem> readFileFolder(File folder) {
         List<CustomItem> items = new ArrayList<>();
@@ -29,15 +30,6 @@ public class YmlLoadFileConfig implements LoadFileConfig {
             System.out.println("文件或文件夹不存在");
             return items;
         }
-
-        // 处理单个文件
-        /*if (folder.isFile()) {
-            if (folder.getName().toLowerCase().endsWith(".yml")) {
-                processFile(folder, items);
-            }
-            System.out.println("测试成功1");
-            return items;
-        }*/
 
         // 处理文件夹
         if (folder.isDirectory()) {
@@ -49,6 +41,7 @@ public class YmlLoadFileConfig implements LoadFileConfig {
             }
         }
         System.out.println("files反序列化成功");
+        System.out.println(items);
         return items;
     }
     @Override
@@ -59,21 +52,17 @@ public class YmlLoadFileConfig implements LoadFileConfig {
             if (file.getName().toLowerCase().endsWith(".yml")) {
                 //加载YAML文件并将其转换为配置对象
                 YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-                //读取item节
-                ConfigurationSection itemSection = config.getConfigurationSection("item");
+                //读取item节  当不存在节时，不需要获取，直接使用config对象来获取这些值
+               // ConfigurationSection itemSection = config.getConfigurationSection("item");
+                // 获取所有键值对,false参数表示不递归获取深层嵌套的值
+                Map<String, Object> itemValues = config.getValues(false);
+                // 将Map反序列化为CustomItem对象
+                CustomItem customItem = CustomItem.deserialize(itemValues);
+                // 将反序列化成功CustomItem对象返回
+                System.out.println("file反序列化成功");
+                System.out.println(customItem);
+                return customItem;
 
-                // 确保"item"节确实存在  ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
-
-                if (itemSection != null) {
-                    // 获取item节中的所有键值对,false参数表示不递归获取深层嵌套的值
-                    Map<String, Object> itemValues = itemSection.getValues(false);
-                    // 将Map反序列化为CustomItem对象
-                    CustomItem customItem = CustomItem.deserialize(itemValues);
-                    // 将反序列化成功CustomItem对象返回
-                    System.out.println("file反序列化成功");
-                    System.out.println(customItem);
-                    return customItem;
-                }
             }
             return item;
         }
@@ -82,8 +71,18 @@ public class YmlLoadFileConfig implements LoadFileConfig {
     private void processFile(File file, List<CustomItem> items) {
         try {
             YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+            // 获取所有键值对,false参数表示不递归获取深层嵌套的值
+            Map<String, Object> itemValues = config.getValues(true);
+            System.out.println(file + "文件中的map:" + itemValues);
+            // 将Map反序列化为CustomItem对象
+            CustomItem item = CustomItem.deserialize(itemValues);
+            // 确保对象创建成功
+            if (item != null) {
+                // 将反序列化成功CustomItem对象添加到列表中
+                items.add(item);
+            }
             // 遍历所有section
-            for (String key : config.getKeys(false)) {
+            /*for (String key : config.getKeys(false)) {
                 // 检查当前键(key)是否对应一个配置节(section)
                 if (config.isConfigurationSection(key)) {
                     // 获取这个配置节
@@ -112,7 +111,7 @@ public class YmlLoadFileConfig implements LoadFileConfig {
                         }
                     }
                 }
-            }
+            }*/
         } catch (Exception e) {
             System.err.println("Error loading file " + file.getName() + ": " + e.getMessage());
             e.printStackTrace();

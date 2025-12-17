@@ -33,6 +33,10 @@ public class ItemLibrary {
         customItems = customItemManager.getCustomItemMap().values().stream()
                 .sorted(Comparator.comparing(CustomItem::getId))
                 .toList();
+        System.out.printf(
+                customItemManager.getCustomItemMap().values().stream()
+                .sorted(Comparator.comparing(CustomItem::getId))
+                .toList().toString());
     }
 
     /**
@@ -40,6 +44,7 @@ public class ItemLibrary {
      * @return 返回所有物品的列表
      */
     public List<CustomItem> seeAllItems(){
+        System.out.printf(customItems.toString());
         return customItems;
     }
 
