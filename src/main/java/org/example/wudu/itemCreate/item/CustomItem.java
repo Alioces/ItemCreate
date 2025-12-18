@@ -122,6 +122,7 @@ public static CustomItem deserialize(@NotNull Map<String, Object> args) {
         }
         return null;
     }
+
     /**
     * 重写clone方法，实现对象的深拷贝
     * @return 返回一个当前对象的副本

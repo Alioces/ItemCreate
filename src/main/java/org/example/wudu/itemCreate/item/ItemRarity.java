@@ -1,6 +1,5 @@
 package org.example.wudu.itemCreate.item;
 
-import lombok.Data;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -23,26 +22,30 @@ import java.util.Map;
 @Getter  // 使用Lombok的@Getter注解，自动为所有字段生成getter方法
 public enum ItemRarity implements ConfigurationSerializable {  // 实现ConfigurationSerializable接口，使对象可被序列化为配置文件格式
     // 稀有度等级从低到高
-    Paper(Material.PAPER, "Paper"),          // 纸质级
-    Wood(Material.OAK_PLANKS, "Wood"),        // 木质级
-    Stone(Material.STONE, "Stone"),          // 石质级
-    Iron(Material.IRON_INGOT, "Iron"),        // 铁质级
-    Diamond(Material.DIAMOND, "Diamond"),    // 钻石级
-    Obsidian(Material.OBSIDIAN, "Obsidian"), // 黑曜石级
-    Netherite(Material.NETHERITE_INGOT, "Nether"), // 下界合金级
-    Bedrock(Material.BEDROCK, "Bedrock");     // 世界基岩级
+    Paper(Material.PAPER, "Paper", "像纸一样脆弱不堪"),          // 纸质级
+    Wood(Material.OAK_PLANKS, "Wood", "木头可以烧木炭"),        // 木质级
+    Stone(Material.STONE, "Stone", "不错的垫脚石"),          // 石质级
+    Iron(Material.IRON_INGOT, "Iron", "常见的铁矿石"),        // 铁质级
+    Diamond(Material.DIAMOND, "Diamond", "宝石！是宝石！"),    // 钻石级
+    Obsidian(Material.OBSIDIAN, "Obsidian", "水和岩浆"), // 黑曜石级
+    Nether(Material.NETHERITE_INGOT, "Nether", "来自地狱的造物"), // 下界合金级
+    Bedrock(Material.BEDROCK, "Bedrock", "世界的顶点");     // 世界基岩级
 
     private Material rarityMaterial;  // 稀有度对应的材质
     private String name;  // 稀有度的名称
+    private String description;
 
     /**
      * 构造函数，用于创建新的稀有度实例
+     *
      * @param rarityMaterial 用于表示稀有度的材质
-     * @param name 稀有度的名称
+     * @param name           稀有度的名称
+     * @param description    稀有度的描述
      */
-    ItemRarity(Material rarityMaterial, String name) {
+    ItemRarity(Material rarityMaterial, String name, String description) {
         this.rarityMaterial = rarityMaterial;
         this.name = name;
+        this.description = description;
     }
 
     @Override
@@ -62,7 +65,6 @@ public enum ItemRarity implements ConfigurationSerializable {  // 实现Configur
     Bukkit 系统在反序列化时会自动调用 ItemRarity.valueOf(name) 来获取对应的枚举值
     */
     public static ItemRarity deserialize(Map<String, Object> args) {
-        System.out.println("反序列化ItemRarity");
         String name = (String) args.get("name");
         return valueOf(name);
     }

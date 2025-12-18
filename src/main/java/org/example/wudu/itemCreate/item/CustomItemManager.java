@@ -1,6 +1,7 @@
 package org.example.wudu.itemCreate.item;
 
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -11,14 +12,12 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.example.wudu.itemCreate.ItemCreate;
+import org.example.wudu.itemCreate.config.LoadFileConfig;
 import org.example.wudu.itemCreate.config.YmlLoadFileConfig;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * CustomItemManager类，用于管理自定义物品，提供对应的查找功能
@@ -78,7 +77,7 @@ public class CustomItemManager {
  */
     public void readerCustomItemConfig(){
         // 创建YAML配置文件加载器实例
-        YmlLoadFileConfig configuration = new YmlLoadFileConfig(new YamlConfiguration());
+        LoadFileConfig configuration = new YmlLoadFileConfig(new YamlConfiguration());
         // 读取指定目录下的配置文件，并对每个自定义物品进行处理
         configuration.readFileFolder(itemConfigDir).forEach(customItem ->{
             // 获取物品堆栈对象
@@ -113,12 +112,21 @@ public class CustomItemManager {
     // 加载YAML配置文件
         YamlConfiguration loaded = YamlConfiguration.loadConfiguration(itemFile);
     // 创建一个自定义物品实例
+        ItemStack itemStack = new ItemStack(Material.APPLE); // 物品材质
+        ItemMeta meta = itemStack.getItemMeta();
+
+        meta.lore(Arrays.asList(
+                Component.newline().content("这是测试物品的描述")
+        ));
+
+        itemStack.setItemMeta(meta);
+
         CustomItem customItem = new CustomItem(
                 "CustomItem",    // 物品名称
                 "testItem",      // 物品标识符
                 0,               // 物品数量
                 ItemRarity.Paper, // 物品稀有度
-                new ItemStack(Material.APPLE) // 物品材质
+                itemStack
         );
     // 将自定义物品的序列化数据添加为默认值
         loaded.addDefaults(customItem.serialize());

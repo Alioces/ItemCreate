@@ -27,7 +27,6 @@ public class YmlLoadFileConfig implements LoadFileConfig {
         List<CustomItem> items = new ArrayList<>();
 
         if (!folder.exists()) {
-            System.out.println("文件或文件夹不存在");
             return items;
         }
 
@@ -40,8 +39,7 @@ public class YmlLoadFileConfig implements LoadFileConfig {
                 }
             }
         }
-        System.out.println("files反序列化成功");
-        System.out.println(items);
+
         return items;
     }
     @Override
@@ -53,14 +51,12 @@ public class YmlLoadFileConfig implements LoadFileConfig {
                 //加载YAML文件并将其转换为配置对象
                 YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
                 //读取item节  当不存在节时，不需要获取，直接使用config对象来获取这些值
-               // ConfigurationSection itemSection = config.getConfigurationSection("item");
+                // ConfigurationSection itemSection = config.getConfigurationSection("item");
                 // 获取所有键值对,false参数表示不递归获取深层嵌套的值
                 Map<String, Object> itemValues = config.getValues(false);
                 // 将Map反序列化为CustomItem对象
                 CustomItem customItem = CustomItem.deserialize(itemValues);
                 // 将反序列化成功CustomItem对象返回
-                System.out.println("file反序列化成功");
-                System.out.println(customItem);
                 return customItem;
 
             }
@@ -73,7 +69,6 @@ public class YmlLoadFileConfig implements LoadFileConfig {
             YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
             // 获取所有键值对,false参数表示不递归获取深层嵌套的值
             Map<String, Object> itemValues = config.getValues(true);
-            System.out.println(file + "文件中的map:" + itemValues);
             // 将Map反序列化为CustomItem对象
             CustomItem item = CustomItem.deserialize(itemValues);
             // 确保对象创建成功
@@ -115,5 +110,4 @@ public class YmlLoadFileConfig implements LoadFileConfig {
             e.printStackTrace();
         }
     }
-
 }

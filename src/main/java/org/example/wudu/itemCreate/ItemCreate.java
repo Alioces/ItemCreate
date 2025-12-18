@@ -1,11 +1,13 @@
 package org.example.wudu.itemCreate;
 
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.example.wudu.itemCreate.config.YmlLoadFileConfig;
 import org.example.wudu.itemCreate.item.CustomItemFactory;
@@ -39,6 +41,8 @@ import java.util.List;
 public final class ItemCreate extends JavaPlugin {
     // 插件实例
     private YmlLoadFileConfig ymlLoadFileConfig = new YmlLoadFileConfig(new YamlConfiguration());
+
+    private PagedMenu menu = new PagedMenu("§6分页菜单", null, 45); // 每页 54-9 个物品
     // 自定义物品库对象，用于管理所有自定义物品
     private ItemLibrary itemLibrary;
     private CustomItemManager customItemManager;
@@ -70,14 +74,18 @@ public final class ItemCreate extends JavaPlugin {
         //注册可序列化的类。不能的话系统看到 == 标记 无法读取指定的类名从而导致系统抛出异常。
         ConfigurationSerialization.registerClass(ItemRarity.class);
         ConfigurationSerialization.registerClass(CustomItem.class);
-
         // Plugin startup logic
         // 读取自定义物品配置文件，加载所有自定义物品
         customItemManager.readerCustomItemConfig();
         this.itemLibrary = new ItemLibrary(customItemManager);
         customItemFactory = new CustomItemFactory(customItemManager);
         // 注册物品事件监听器，处理与物品相关的事件
-        //getServer().getPluginManager().registerEvents(new ItemEventListener(),this);
+        getServer().getPluginManager().registerEvents(new ItemEventListener(),this);
+
+        //注册菜单事件监听器
+        getServer().getPluginManager().registerEvents(new MenuListener(menu), this);
+        //注册箱子监听器
+        getServer().getPluginManager().registerEvents(new BoxListener(), this);
     }
 
     /**
@@ -114,15 +122,13 @@ public final class ItemCreate extends JavaPlugin {
                 // 如果是玩家，打开物品菜单（代码中只返回true，实际实现可能需要添加菜单打开逻辑）
                 getLogger().info("菜单插件已启用！");
                 //创建物品集合
-                List<ItemStack> list = itemLibrary.seeAllItems().stream().map(item -> customItemFactory.createItemStack(item)).toList();
+                List<ItemStack> list = itemLibrary.seeAllItems().stream()
+                        .map(item -> customItemFactory.createItemStack(item))
+                        .toList();
+                menu.setItems(list);
+
                 getLogger().info("物品库存："+list);
                 getLogger().info("物品代码库存："+itemLibrary.seeAllItems());
-                // 创建分页菜单
-                PagedMenu menu = new PagedMenu("§6分页菜单", list, 45); // 每页 54-9 个物品
-                //注册菜单事件监听器
-                getServer().getPluginManager().registerEvents(new MenuListener(menu), this);
-                //注册箱子监听器
-                getServer().getPluginManager().registerEvents(new BoxListener(), this);
                 Player player = (Player) sender; //将 sender[CommandSender 可以是：玩家（Player），控制台（Console），命令方块（Command Block）] 强制转换为 Player 类型。这样做是因为我们需要使用 Player 类特有的方法（比如打开背包、传送等）
                 player.openInventory(menu.createPage());//打开菜单
                 return true;
