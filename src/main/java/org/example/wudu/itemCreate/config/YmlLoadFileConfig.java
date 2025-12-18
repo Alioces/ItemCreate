@@ -81,37 +81,6 @@ public class YmlLoadFileConfig implements LoadFileConfig {
                 // 将反序列化成功CustomItem对象添加到列表中
                 items.add(item);
             }
-            // 遍历所有section
-            /*for (String key : config.getKeys(false)) {
-                // 检查当前键(key)是否对应一个配置节(section)
-                if (config.isConfigurationSection(key)) {
-                    // 获取这个配置节
-                    // 例如，如果YAML中有：
-                    // sword:
-                    //   item: ...
-                    // 那么这里获取的是"sword"这个节
-                    ConfigurationSection section = config.getConfigurationSection(key);
-                    // 在当前节中查找名为"item"的子节
-                    // 对应YAML结构：
-                    // sword:
-                    //   item:        <- 这里
-                    //     type: ...
-                    //     name: ...
-                    ConfigurationSection itemSection = section.getConfigurationSection("item");
-                    // 确保"item"节确实存在 !!!!!!!!
-                    if (itemSection != null) {
-                        // 获取item节中的所有键值对,false参数表示不递归获取深层嵌套的值
-                        Map<String, Object> itemValues = itemSection.getValues(false);
-                        // 将Map反序列化为CustomItem对象
-                        CustomItem item = CustomItem.deserialize(itemValues);
-                        // 确保对象创建成功
-                        if (item != null) {
-                            // 将反序列化成功CustomItem对象添加到列表中
-                            items.add(item);
-                        }
-                    }
-                }
-            }*/
         } catch (Exception e) {
             System.err.println("Error loading file " + file.getName() + ": " + e.getMessage());
             e.printStackTrace();
