@@ -17,11 +17,12 @@ public class YmlLoadFileConfig implements LoadFileConfig {
 
     private final YamlConfiguration yamlConfiguration;
 
+
     public YmlLoadFileConfig(YamlConfiguration yamlConfiguration){
         this.yamlConfiguration = yamlConfiguration;
     }
 
-    //可以传入单个文件，也可以传文件夹
+    //检查ItemCreate下config.yml中configureFolders对应的文件夹是否存在，如果存在读取对应文件夹下所有yml文件到
     @Override
     public List<CustomItem> readFileFolder(File folder) {
         List<CustomItem> items = new ArrayList<>();
@@ -82,6 +83,16 @@ public class YmlLoadFileConfig implements LoadFileConfig {
     private void processFile(File file, List<CustomItem> items) {
         try {
             YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+            // 获取所有键值对,false参数表示不递归获取深层嵌套的值
+            Map<String, Object> itemValues = config.getValues(true);
+            System.out.println(file + "文件中的map:" + itemValues);
+            // 将Map反序列化为CustomItem对象
+            CustomItem item = CustomItem.deserialize(itemValues);
+            // 确保对象创建成功
+            if (item != null) {
+                // 将反序列化成功CustomItem对象添加到列表中
+                items.add(item);
+            }
             // 遍历所有section
             for (String key : config.getKeys(false)) {
                 System.out.println("开始反序列化");
@@ -114,7 +125,7 @@ public class YmlLoadFileConfig implements LoadFileConfig {
                         }
                     }
                 }
-            }
+            }*/
         } catch (Exception e) {
             System.err.println("Error loading file " + file.getName() + ": " + e.getMessage());
             e.printStackTrace();

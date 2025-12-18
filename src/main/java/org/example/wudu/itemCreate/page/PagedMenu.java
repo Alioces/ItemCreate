@@ -42,13 +42,15 @@ public class PagedMenu {
         // 添加当前页的物品
         List<ItemStack> pageItems = getCurrentPageItems();
         //这里从10开始，空出第一行
-        for (int i = 9; i < pageItems.size(); i++) {
+        for (int i = 0; i < pageItems.size(); i++) {
+            //getItemMeta()，用于获取物品的元数据（metadata）。这个方法返回一个 ItemMeta 对像，包含了物品的所有额外属性信息。
             ItemMeta meta = pageItems.get(i).getItemMeta();
             if (meta != null) {
-                meta.setLore(Arrays.asList("§7这是一个只读物品", "§c无法移动或交互"));
+                //设置物品的额外属性信息
+//                meta.setLore(Arrays.asList("§7这是一个只读物品", "§c无法移动或交互"));
                 pageItems.get(i).setItemMeta(meta);
             }
-            inventory.setItem(i, pageItems.get(i));
+            inventory.setItem(i+9, pageItems.get(i));
         }
 
         // 添加翻页按钮
@@ -86,5 +88,7 @@ public class PagedMenu {
             currentPage--;
         }
     }
+
+
 }
 

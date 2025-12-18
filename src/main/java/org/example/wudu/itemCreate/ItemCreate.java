@@ -38,7 +38,7 @@ public final class ItemCreate extends JavaPlugin {
     @Override
     public void onLoad() {
         // 创建自定义物品库实例，传入自定义物品管理器
-        itemLibrary = new ItemLibrary(new CustomItemManager(this));
+        this.customItemManager = new CustomItemManager(this);
     }
 
     /**
@@ -47,11 +47,20 @@ public final class ItemCreate extends JavaPlugin {
      */
     @Override
     public void onEnable() {
+       /* 当 Bukkit 的配置系统读取到这种格式时，它会：
+        1.看到 ==: 标记
+        2.读取指定的类名
+        3.使用该类的静态 deserialize() 方法创建对象实例*/
+        //注册可序列化的类。不能的话系统看到 == 标记 无法读取指定的类名从而导致系统抛出异常。
+        ConfigurationSerialization.registerClass(ItemRarity.class);
+        ConfigurationSerialization.registerClass(CustomItem.class);
+
         // Plugin startup logic
         getServer().getPluginManager().registerEvents(new ItemEventListener(),this);
         customItemManager = new CustomItemManager(this);
 
-        // 注册CustomItem的序列化
+
+     /*   // 注册CustomItem的序列化
         ConfigurationSerialization.registerClass(CustomItem.class);
         //反序列化为CustomItem对象
         // ymlLoadFileConfig.readFileFolder(new File("C:/MineCraft/demo.yml"));
@@ -166,7 +175,10 @@ public final class ItemCreate extends JavaPlugin {
                 // 如果是玩家，打开物品菜单（代码中只返回true，实际实现可能需要添加菜单打开逻辑）
                 getLogger().info("菜单插件已启用！");
                 //创建物品集合
-                List<ItemStack> list = new ArrayList<>(
+                List<ItemStack> list = itemLibrary.seeAllItems().stream().map(item -> customItemFactory.createItemStack(item)).toList();
+                getLogger().info("物品库存："+list);
+                getLogger().info("物品代码库存："+itemLibrary.seeAllItems());
+                        /*new ArrayList<>(
                         Arrays.asList(
                                 new ItemStack(Material.ACACIA_BOAT), new ItemStack(Material.ACACIA_BUTTON), new ItemStack(Material.ACACIA_CHEST_BOAT),
                                 new ItemStack(Material.ACACIA_DOOR), new ItemStack(Material.ACACIA_FENCE), new ItemStack(Material.ACACIA_FENCE_GATE),
@@ -197,7 +209,7 @@ public final class ItemCreate extends JavaPlugin {
                                 new ItemStack(Material.ACTIVATOR_RAIL), new ItemStack(Material.ACACIA_STAIRS), new ItemStack(Material.ACACIA_TRAPDOOR),
                                 new ItemStack(Material.ACACIA_WOOD)
                         )
-                );
+                );*/
                 // 创建分页菜单
                 PagedMenu menu = new PagedMenu("§6分页菜单", list, 45); // 每页 54-9 个物品
                 //注册菜单事件监听器
