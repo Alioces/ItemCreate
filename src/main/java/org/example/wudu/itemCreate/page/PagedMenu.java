@@ -1,5 +1,7 @@
 package org.example.wudu.itemCreate.page;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -10,8 +12,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PagedMenu {
+
+    @Getter
     private final String title;
-    private final List<ItemStack> items;
+
+    @Setter
+    private List<ItemStack> items;
     private final int pageSize; // 每页显示的物品数量
     private int currentPage = 0; // 当前页码
 
@@ -42,13 +48,8 @@ public class PagedMenu {
         // 添加当前页的物品
         List<ItemStack> pageItems = getCurrentPageItems();
         //这里从10开始，空出第一行
-        for (int i = 9; i < pageItems.size(); i++) {
-            ItemMeta meta = pageItems.get(i).getItemMeta();
-            if (meta != null) {
-                meta.setLore(Arrays.asList("§7这是一个只读物品", "§c无法移动或交互"));
-                pageItems.get(i).setItemMeta(meta);
-            }
-            inventory.setItem(i, pageItems.get(i));
+        for (int i = 0; i < pageItems.size(); i++) {
+            inventory.setItem(i+9, pageItems.get(i));
         }
 
         // 添加翻页按钮
