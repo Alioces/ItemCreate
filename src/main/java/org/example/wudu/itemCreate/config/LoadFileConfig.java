@@ -10,12 +10,7 @@ import java.util.List;
  * 该接口定义了读取和保存文件的相关方法
  */
 public interface LoadFileConfig {
-
-    /**
-     * 读取指定文件夹中的所有文件
-     * @param file 要读取的文件夹
-     * @return 包含文件夹中所有文件的CustomItem列表
-     */
+    //读取文件夹中的所有YAML文件
     List<CustomItem> readFileFolder(File file);
 
     /**
@@ -25,9 +20,6 @@ public interface LoadFileConfig {
      */
     CustomItem readFile(File file);
 
-    /**
-     * 保存CustomItem对象到文件
-     * @param customItem 要保存的CustomItem对象
-     */
-    void saveFile(CustomItem customItem,File file);
+    //将CustomItem对象保存到YAML文件中
+    void saveFile(CustomItem customItem);
 }
