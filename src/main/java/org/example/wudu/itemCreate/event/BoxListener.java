@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
@@ -48,7 +47,6 @@ public class BoxListener implements Listener {
                 event.setCancelled(true);
                 // 获取点击箱子的玩家
                 Player player = event.getPlayer();
-                //player.give()
                 //创建一个 Inventory 对象，表示一个 9x3 的箱子
                 Inventory inventory = Bukkit.createInventory(null, 9*3, "§6自定义箱子");
                 // 打开自定义菜单
