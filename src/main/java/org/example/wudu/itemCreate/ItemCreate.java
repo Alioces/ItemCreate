@@ -42,6 +42,7 @@ public final class ItemCreate extends JavaPlugin {
     // 插件实例
     private YmlLoadFileConfig ymlLoadFileConfig = new YmlLoadFileConfig(new YamlConfiguration());
 
+    //独立操作菜单
     private PagedMenu menu = new PagedMenu("§6分页菜单", null, 45); // 每页 54-9 个物品
     // 自定义物品库对象，用于管理所有自定义物品
     private ItemLibrary itemLibrary;
