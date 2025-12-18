@@ -9,5 +9,5 @@ website: https:\\localhost:8080
 
 commands:
   menu:
-    description: 打开物品库
+    description: 打开全部物品仓库
     usage: /<command>

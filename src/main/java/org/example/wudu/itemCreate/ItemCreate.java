@@ -78,22 +78,6 @@ public final class ItemCreate extends JavaPlugin {
         customItemFactory = new CustomItemFactory(customItemManager);
         // 注册物品事件监听器，处理与物品相关的事件
         //getServer().getPluginManager().registerEvents(new ItemEventListener(),this);
-
-
-     /*   // 注册CustomItem的序列化
-        ConfigurationSerialization.registerClass(CustomItem.class);
-        //反序列化为CustomItem对象
-        CustomItem customItem = ymlLoadFileConfig.readFile(new File(getDataFolder() + "/demo.yml"));
-        //List<CustomItem> customItems = ymlLoadFileConfig.readFileFolder(new File(getDataFolder() + "/" + getConfig().getString("configureFolders")));
-        List<CustomItem> customItems = ymlLoadFileConfig.readFileFolder(new File(getDataFolder().toURI()));
-        //将CustomItem对象序列化为yml文件
-        CustomItem item = new CustomItem();
-        item.setId(1);
-        item.setName("测试文件");
-        item.setType("custom");
-        item.setItemRarity(ItemRarity.Paper);
-        ymlLoadFileConfig.saveFile(item, new File(getDataFolder()+"/" + item.getName() + ".yml"));
-*/
     }
 
     /**
