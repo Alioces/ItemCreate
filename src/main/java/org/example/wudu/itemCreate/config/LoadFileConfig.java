@@ -21,5 +21,5 @@ public interface LoadFileConfig {
     CustomItem readFile(File file);
 
     //将CustomItem对象保存到YAML文件中
-    void saveFile(CustomItem customItem);
+    void saveFile(CustomItem customItem,File targetFile);
 }
