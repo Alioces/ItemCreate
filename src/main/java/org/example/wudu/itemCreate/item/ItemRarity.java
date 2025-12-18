@@ -60,10 +60,6 @@ public enum ItemRarity implements ConfigurationSerializable {  // 实现Configur
     它会尝试将配置中的 name 值转换为对应的枚举常量
     serialize() 方法正确地将枚举的 name 存入 Map
     Bukkit 系统在反序列化时会自动调用 ItemRarity.valueOf(name) 来获取对应的枚举值
-    public static ItemRarity deserialize(Map<String, Object> args) {
-        String name = (String) args.get("name");
-        return valueOf(name);
-    }
     */
     public static ItemRarity deserialize(Map<String, Object> args) {
         System.out.println("反序列化ItemRarity");

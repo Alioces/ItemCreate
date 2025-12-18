@@ -133,38 +133,6 @@ public final class ItemCreate extends JavaPlugin {
                 List<ItemStack> list = itemLibrary.seeAllItems().stream().map(item -> customItemFactory.createItemStack(item)).toList();
                 getLogger().info("物品库存："+list);
                 getLogger().info("物品代码库存："+itemLibrary.seeAllItems());
-                        /*new ArrayList<>(
-                        Arrays.asList(
-                                new ItemStack(Material.ACACIA_BOAT), new ItemStack(Material.ACACIA_BUTTON), new ItemStack(Material.ACACIA_CHEST_BOAT),
-                                new ItemStack(Material.ACACIA_DOOR), new ItemStack(Material.ACACIA_FENCE), new ItemStack(Material.ACACIA_FENCE_GATE),
-                                new ItemStack(Material.ACACIA_HANGING_SIGN), new ItemStack(Material.ACACIA_LEAVES), new ItemStack(Material.ACACIA_LOG),
-                                new ItemStack(Material.ACACIA_PLANKS), new ItemStack(Material.ACACIA_PRESSURE_PLATE), new ItemStack(Material.ACACIA_SAPLING),
-                                new ItemStack(Material.ACACIA_SHELF), new ItemStack(Material.ACACIA_SIGN), new ItemStack(Material.ACACIA_SLAB),
-                                new ItemStack(Material.ACTIVATOR_RAIL), new ItemStack(Material.ACACIA_STAIRS), new ItemStack(Material.ACACIA_TRAPDOOR),
-                                new ItemStack(Material.ACACIA_WOOD),
-                                new ItemStack(Material.ACACIA_BOAT), new ItemStack(Material.ACACIA_BUTTON), new ItemStack(Material.ACACIA_CHEST_BOAT),
-                                new ItemStack(Material.ACACIA_DOOR), new ItemStack(Material.ACACIA_FENCE), new ItemStack(Material.ACACIA_FENCE_GATE),
-                                new ItemStack(Material.ACACIA_HANGING_SIGN), new ItemStack(Material.ACACIA_LEAVES), new ItemStack(Material.ACACIA_LOG),
-                                new ItemStack(Material.ACACIA_PLANKS), new ItemStack(Material.ACACIA_PRESSURE_PLATE), new ItemStack(Material.ACACIA_SAPLING),
-                                new ItemStack(Material.ACACIA_SHELF), new ItemStack(Material.ACACIA_SIGN), new ItemStack(Material.ACACIA_SLAB),
-                                new ItemStack(Material.ACTIVATOR_RAIL), new ItemStack(Material.ACACIA_STAIRS), new ItemStack(Material.ACACIA_TRAPDOOR),
-                                new ItemStack(Material.ACACIA_WOOD),
-                                new ItemStack(Material.ACACIA_BOAT), new ItemStack(Material.ACACIA_BUTTON), new ItemStack(Material.ACACIA_CHEST_BOAT),
-                                new ItemStack(Material.ACACIA_DOOR), new ItemStack(Material.ACACIA_FENCE), new ItemStack(Material.ACACIA_FENCE_GATE),
-                                new ItemStack(Material.ACACIA_HANGING_SIGN), new ItemStack(Material.ACACIA_LEAVES), new ItemStack(Material.ACACIA_LOG),
-                                new ItemStack(Material.ACACIA_PLANKS), new ItemStack(Material.ACACIA_PRESSURE_PLATE), new ItemStack(Material.ACACIA_SAPLING),
-                                new ItemStack(Material.ACACIA_SHELF), new ItemStack(Material.ACACIA_SIGN), new ItemStack(Material.ACACIA_SLAB),
-                                new ItemStack(Material.ACTIVATOR_RAIL), new ItemStack(Material.ACACIA_STAIRS), new ItemStack(Material.ACACIA_TRAPDOOR),
-                                new ItemStack(Material.ACACIA_WOOD),
-                                new ItemStack(Material.ACACIA_BOAT), new ItemStack(Material.ACACIA_BUTTON), new ItemStack(Material.ACACIA_CHEST_BOAT),
-                                new ItemStack(Material.ACACIA_DOOR), new ItemStack(Material.ACACIA_FENCE), new ItemStack(Material.ACACIA_FENCE_GATE),
-                                new ItemStack(Material.ACACIA_HANGING_SIGN), new ItemStack(Material.ACACIA_LEAVES), new ItemStack(Material.ACACIA_LOG),
-                                new ItemStack(Material.ACACIA_PLANKS), new ItemStack(Material.ACACIA_PRESSURE_PLATE), new ItemStack(Material.ACACIA_SAPLING),
-                                new ItemStack(Material.ACACIA_SHELF), new ItemStack(Material.ACACIA_SIGN), new ItemStack(Material.ACACIA_SLAB),
-                                new ItemStack(Material.ACTIVATOR_RAIL), new ItemStack(Material.ACACIA_STAIRS), new ItemStack(Material.ACACIA_TRAPDOOR),
-                                new ItemStack(Material.ACACIA_WOOD)
-                        )
-                );*/
                 // 创建分页菜单
                 PagedMenu menu = new PagedMenu("§6分页菜单", list, 45); // 每页 54-9 个物品
                 //注册菜单事件监听器
