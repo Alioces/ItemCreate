@@ -27,7 +27,7 @@ public class CustomItem implements ConfigurationSerializable {
     }
     //序列化
     @Override
-    public @NotNull  Map<String, Object> serialize() {
+    public @NotNull Map<String, Object> serialize() {
         HashMap<String,Object> keyMap = new HashMap<>();
         keyMap.put("type",type);
         keyMap.put("name",name);
@@ -36,110 +36,21 @@ public class CustomItem implements ConfigurationSerializable {
         keyMap.put("itemStack",itemStack);
         return keyMap;
     }
-//    //反
-//    public static CustomItem deserialize(@NotNull Map<String, Object> args) {
-//        CustomItem item = new CustomItem();
-//        if (args.containsKey("type")) item.type = (String) args.get("type");
-//        if (args.containsKey("name")) item.name = (String) args.get("name");
-//        if (args.containsKey("id"))   item.id = (int) args.get("id");
-//        *//*==: 是一个特殊的键，用于告诉配置系统这个数据应该被反序列化成哪种类型的对象
-//        org.example.wudu.itemCreate.item.ItemRarity 是完整的类名，指定了这个对象应该被反序列化为 ItemRarity 类的实例
-//        这种格式通常出现在 Bukkit 插件中，用于保存和加载复杂的自定义对象*//*
-//        if (args.containsKey("itemRarity")) {
-//            Object rarityObj = args.get("itemRarity");
-//            // 处理 ConfigurationSerializable 对象
-//            if (rarityObj instanceof Map) {
-//                Map<String, Object> rarityMap = (Map<String, Object>) rarityObj;
-//                // 检查是否是 ConfigurationSerializable 对象
-//                System.out.println(rarityMap);
-//                if (rarityMap.containsKey("==")) {
-//                    // 获取实际的类名
-//                    String className = (String) rarityMap.get("==");
-//                    if (className.equals("org.example.wudu.itemCreate.item.ItemRarity")) {
-//                        // 从 name 字段获取值
-//                        String rarityName = (String) rarityMap.get("name");
-//                        try {
-//                            //valueOf() 接收一个字符串参数,返回该字符串对应的枚举常量
-//                            item.itemRarity = ItemRarity.valueOf(rarityName);
-//                        } catch (IllegalArgumentException e) {
-//                            item.itemRarity = ItemRarity.Paper;
-//                            System.out.println("未知的稀有度: " + rarityName + ", 使用默认值 Paper");
-//                        }
-//                    }
-//                } else {
-//                    // 处理普通的 Map 结构
-//                    String rarityName = (String) rarityMap.get("name");
-//                    try {
-//                        item.itemRarity = ItemRarity.valueOf(rarityName);
-//                    } catch (IllegalArgumentException e) {
-//                        item.itemRarity = ItemRarity.Paper;
-//                        System.out.println("未知的稀有度: " + rarityName + ", 使用默认值 Paper");
-//                    }
-//                }
-//            }
-//            // 处理字符串类型
-//            else if (rarityObj instanceof String) {
-//                try {
-//                    item.itemRarity = ItemRarity.valueOf((String) rarityObj);
-//                } catch (IllegalArgumentException e) {
-//                    item.itemRarity = ItemRarity.Paper;
-//                    System.out.println("未知的稀有度: " + rarityObj + ", 使用默认值 Paper");
-//                }
-//            }
-//            // 处理已经是 ItemRarity 类型的情况
-//            else if (rarityObj instanceof ItemRarity) {
-//                item.itemRarity = (ItemRarity) rarityObj;
-//            }
-//        }
-//
-//        if (args.containsKey("itemStack")) {
-//            Object stackObj = args.get("itemStack");
-//            if (stackObj instanceof Map) {
-//                // 处理 itemStack 的 Map 结构
-//                Map<String, Object> stackMap = (Map<String, Object>) stackObj;
-//                // 创建 ItemStack
-//                String material = (String) stackMap.get("id");
-//                int count = (int) stackMap.get("count");
-//                // 这里需要根据你的具体需求创建 ItemStack
-//                // 示例：item.itemStack = new ItemStack(Material.valueOf(material.toUpperCase()), count);
-//            } else if (stackObj instanceof ItemStack) {
-//                item.itemStack = (ItemStack) stackObj;
-//            }
-//        }
-//        return item;
-//    }
-public static CustomItem deserialize(@NotNull Map<String, Object> args) {
-    CustomItem item = new CustomItem();
-    // 基础属性设置
-    item.type = getString(args, "type");
-    item.name = getString(args, "name");
-    item.id = getInt(args, "id");
-    // 处理物品稀有度
-    item.itemRarity = parseItemRarity(args.get("itemRarity"));
-    // 处理物品堆叠
-    item.itemStack = parseItemStack(args.get("itemStack"));
-    return item;
-}
-    // 辅助方法：安全获取字符串
-    private static String getString(Map<String, Object> map, String key) {
-        return map.containsKey(key) ? (String) map.get(key) : null;
-    }
-    // 辅助方法：安全获取整数
-    private static int getInt(Map<String, Object> map, String key) {
-        return map.containsKey(key) ? (int) map.get(key) : 0;
-    }
-    // 辅助方法：解析物品稀有度
-    private static ItemRarity parseItemRarity(Object rarityObj) {
-        //默认Paper
-        if (rarityObj == null) {
-            return ItemRarity.Paper;
+    //反
+    public static CustomItem deserialize(@NotNull Map<String, Object> args) {
+        CustomItem item = new CustomItem();
+
+        if (args.containsKey("type")) {
+            item.type = (String) args.get("type");
         }
-        try {
-            // 处理已经是 ItemRarity 类型的情况
-            if (rarityObj instanceof ItemRarity) {
-                return (ItemRarity) rarityObj;
-            }
-            // 处理字符串类型
+        if (args.containsKey("name")) {
+            item.name = (String) args.get("name");
+        }
+        if (args.containsKey("id")) {
+            item.id = (int) args.get("id");
+        }
+        if (args.containsKey("itemRarity")) {
+            Object rarityObj = args.get("itemRarity");
             if (rarityObj instanceof String) {
                 try {
                     // 将字符串转换为大写后转换为枚举
@@ -153,12 +64,11 @@ public static CustomItem deserialize(@NotNull Map<String, Object> args) {
                 item.itemRarity = (ItemRarity) rarityObj;
             }
         }
-        // 获取稀有度名称
-        String rarityName = (String) rarityMap.get("name");
-        if (rarityName == null) {
-            return ItemRarity.Paper;
+        if (args.containsKey("itemStack")) {
+            item.itemStack = (ItemStack) args.get("itemStack");
         }
-        return ItemRarity.valueOf(rarityName);
+
+        return item;
     }
 
 }
